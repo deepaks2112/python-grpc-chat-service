@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+message ChatMessageRequest {
+    uint64 thread_id = 1;
+    string message = 2;
+    uint64 sender_id = 3;
+    uint64 recipient_id = 4;
+}
+
+message ChatMessageResponse {
+    uint64 id = 1;
+}
+
+message ChatMessage {
+    uint64 id = 1;
+    uint64 thread_id = 2;
+    string message = 3;
+    uint64 sender_id = 4;
+    uint64 recipient_id = 5;
+}
+
+message ChatClient {
+    uint64 recipient_id = 1;
+}
+
+service ChatService {
+    rpc SendMessage(ChatMessageRequest) returns (ChatMessageResponse);
+    rpc ReceiveMessages(ChatClient) returns (stream ChatMessage);
+    // rpc ConnectDuplexStream(stream ChatMessageRequest) returns (stream ChatMessage);
+}
+
+
+// Command to generate python files:
+// python3 -m grpc_tools.protoc -Iprotos --python_out=. --grpc_python_out=. protos/chatservice.proto
