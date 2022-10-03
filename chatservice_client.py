@@ -29,8 +29,8 @@ def run():
         write_thread.start()
         read_thread.start()
 
-        read_thread.join()
         write_thread.join()
+        read_thread.join()
 
         print("Quitting!")
 
